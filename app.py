@@ -1,6 +1,43 @@
 import streamlit as st
 import base64
 from openai import OpenAI
+# ── CSS سفارشی برای ظاهر زیبا ──
+st.markdown("""
+<style>
+    /* رنگ پس‌زمینه و متن */
+    .stApp {
+        background-color: #0e1117;
+    }
+    
+    /* پیام‌های کاربر */
+    [data-testid="stChatMessage"]:has(.user-avatar) {
+        background-color: #1e3a5f;
+        border-radius: 15px;
+        padding: 10px;
+    }
+    
+    /* پیام‌های دستیار */
+    [data-testid="stChatMessage"]:has(.assistant-avatar) {
+        background-color: #1a1a2e;
+        border-radius: 15px;
+        padding: 10px;
+    }
+    
+    /* دکمه‌ها */
+    .stButton > button {
+        background-color: #4CAF50;
+        color: white;
+        border-radius: 10px;
+        border: none;
+    }
+    
+    /* فیلد ورودی */
+    .stChatInput > div {
+        background-color: #1a1a2e;
+        border-radius: 15px;
+    }
+</style>
+""", unsafe_allow_html=True)
 
 # ============================
 #  فقط این دو خط را عوض کن:
