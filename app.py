@@ -1,56 +1,59 @@
 import streamlit as st
 import base64
 from openai import OpenAI
-# ── CSS سفارشی برای ظاهر زیبا ──
+# ── تنظیمات ظاهر ──
 st.markdown("""
 <style>
-    /* رنگ پس‌زمینه و متن */
+    /* پس‌زمینه روشن */
     .stApp {
-        background-color: #0e1117;
+        background-color: #ffffff;
     }
     
-    /* پیام‌های کاربر */
-    [data-testid="stChatMessage"]:has(.user-avatar) {
-        background-color: #1e3a5f;
-        border-radius: 15px;
+    /* متن‌ها تیره */
+    .stApp, .stMarkdown, .stChatMessage {
+        color: #1a1a1a !important;
+    }
+    
+    /* پیام کاربر */
+    [data-testid="stChatMessage"]:has(div[data-testid="stChatMessageAvatarUser"]) {
+        background-color: #e3f2fd;
+        border-radius: 12px;
         padding: 10px;
     }
     
-    /* پیام‌های دستیار */
-    [data-testid="stChatMessage"]:has(.assistant-avatar) {
-        background-color: #1a1a2e;
-        border-radius: 15px;
+    /* پیام دستیار */
+    [data-testid="stChatMessage"]:has(div[data-testid="stChatMessageAvatarAssistant"]) {
+        background-color: #f5f5f5;
+        border-radius: 12px;
         padding: 10px;
+    }
+    
+    /* فیلد ورودی چت */
+    .stChatInput textarea {
+        color: #1a1a1a !important;
+        background-color: #ffffff !important;
+    }
+    
+    /* نوار کناری */
+    [data-testid="stSidebar"] {
+        background-color: #fafafa;
     }
     
     /* دکمه‌ها */
     .stButton > button {
-        background-color: #4CAF50;
+        background-color: #1976d2;
         color: white;
-        border-radius: 10px;
-        border: none;
-    }
-    
-    /* فیلد ورودی */
-    .stChatInput > div {
-        background-color: #1a1a2e;
-        border-radius: 15px;
+        border-radius: 8px;
     }
 </style>
 """, unsafe_allow_html=True)
-
 # ============================
 #  فقط این دو خط را عوض کن:
 # ============================
 OPENROUTER_API_KEY = st.secrets["OPENROUTER_API_KEY"]
 PASSWORD = st.secrets["PASSWORD"]
 # ============================
-
-MODELS = [
-    "google/gemini-2.0-flash-exp:free",
-    "meta-llama/llama-3.2-11b-vision-instruct:free",
-]
-
+MODELS = ["openrouter/free"]
 SYSTEM_PROMPT = (
     "تو یک دستیار هوشمند برای برنامه‌نویسی و پاسخ به سوالات هستی. "
     "اگر کاربر فارسی نوشت، فارسی و ساده پاسخ بده. "
